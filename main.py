@@ -1,9 +1,9 @@
 import pandas as pd
-import sklearn
-from pandas.core.interchange import column
-
+import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 #implementing ML by using house price prediction dataset
 # absolute path ----  /Users/vishaljagtap/Desktop/Aishwarya/AI_May_2026/Python_Machine_Learning/dataset/Housing.csv
@@ -75,3 +75,38 @@ print("\n ===========X_test========= \n")
 print(X_test)
 print("\n ===========y_test========= \n")
 print(y_test)
+
+#model training
+print("\n===========Model Training============\n")
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+#prediction
+print("\n===========Prediction============\n")
+y_predicted_price = model.predict(X_test)
+print(y_predicted_price)
+print(y_predicted_price[0])
+print(np.shape(y_predicted_price))
+
+#metrics -- accuracy check for regression models in ML
+print("\n===========MSE============\n")
+mse = mean_squared_error(y_test,y_predicted_price)
+print(mse)
+
+rms_e_value = np.sqrt(mse)
+print("\n mse_value {}".format(rms_e_value))
+
+print("\n===========MAE============\n")
+mae = mean_absolute_error(y_test,y_predicted_price)
+print("mae {}".format(mae))
+
+print("\n===========R2 Score============\n")
+r2_score = r2_score(y_test,y_predicted_price)
+print("r2_score {}".format(r2_score))
+
+#plotting graph for checking scatter plots
+plt.figure(figsize = (10.0,10.0))
+plt.scatter(y_test,y_predicted_price)
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
+plt.show()
